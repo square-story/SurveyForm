@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 const seedAdmin = async () => {
     try {
         await mongoose.connect(appConfig.mongoUri);
-
         const count = await Admin.countDocuments();
         if (count > 0) {
             console.log('Admin already exists. Skipping seeding.');
@@ -17,7 +16,7 @@ const seedAdmin = async () => {
 
         const adminData = {
             username: "Admin",
-            password: await hashPassword("Admin@1234"),
+            password: await hashPassword("Admin@123"),
         };
 
         const admin = new Admin(adminData);

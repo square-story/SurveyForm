@@ -1,4 +1,3 @@
-import { hashPassword } from "@/utils";
 import { IAdmin } from "shared/types";
 import { Document, model, Schema } from "mongoose";
 
@@ -13,13 +12,6 @@ const AdminSchema = new Schema<IAdminModel>({
         timestamps: true,
     }
 );
-
-AdminSchema.pre<IAdminModel>("save", async function (next) {
-    if (this.isModified("password")) {
-        this.password = await hashPassword(this.password);
-    }
-    next();
-});
 
 const Admin = model<IAdminModel>("Admin", AdminSchema);
 export default Admin;
