@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const signinSchema = z
   .object({
-    email: z.string().email(HttpResponse.INVALID_EMAIL),
+    username: z.string().min(3).max(100).nonempty(HttpResponse.INVALID_USERNAME),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters long")
@@ -16,4 +16,4 @@ export const signinSchema = z
       ),
   })
   .strict()
-  
+

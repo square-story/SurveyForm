@@ -1,0 +1,7 @@
+export const DI_TYPES = {
+    AuthService: Symbol.for('AuthService'),
+    AuthController: Symbol.for('AuthController'),
+    AdminRepository: Symbol.for('AdminRepository'),
+    AdminService: Symbol.for('AdminService'),
+    AdminController: Symbol.for('AdminController'),
+}

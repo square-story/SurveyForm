@@ -24,10 +24,5 @@ export enum HttpResponse {
     REQUIRED_AUTHOR_ID = "Author ID is required",
     REQUIRED_AUTHOR_NAME = "Author name is required",
     TOO_MANY_REQUESTS = "Too many requests, please try again later.",
-    SNIPPETS_FOUND = "Snippets found",
-    SNIPPET_FOUND = "Snippet found",
-    SNIPPET_NOT_FOUND = "Snippet not found",
-    SNIPPET_CREATED = "Snippet created successfully",
-    SNIPPET_UPDATED = "Snippet updated successfully",
-    SNIPPET_DELETED = "Snippet deleted successfully",
+    INVALID_USERNAME = "Invalid username",
 }; 

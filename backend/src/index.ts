@@ -5,6 +5,7 @@ import { appConfig, connectToDatabase, developmentLogger, errorLogger } from "./
 import cookieParser from "cookie-parser";
 import { notFoundHandler } from "./middlewares/not-found.middleware";
 import { errorHandler } from "./middlewares/error.middlware";
+import { authRouter } from "./routes/auth.route";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(developmentLogger);
 app.use(errorLogger);
 app.use(cookieParser());
 
+app.use("/api/auth", authRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
