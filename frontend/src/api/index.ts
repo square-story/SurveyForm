@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
                     }
                 });
 
-                const newAccessToken = data.accessToken;
+                const newAccessToken = data.token;
 
                 if (!newAccessToken) {
                     console.log("No new access token")
