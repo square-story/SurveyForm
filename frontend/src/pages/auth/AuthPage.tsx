@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -6,17 +5,17 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Eye, EyeOff, Lock, Shield } from "lucide-react"
+import { Lock, Shield } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { loginSchema } from "@/schema/authSchema"
 import { formatTimestamp } from "@/utils/formatDate"
 import { AuthService } from "@/services/authService"
+import { PasswordInput } from "@/components/common/password-input"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
 const AuthPage = () => {
-    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -101,22 +100,7 @@ const AuthPage = () => {
                                         <FormItem>
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <div className="relative">
-                                                    <Input
-                                                        type={showPassword ? "text" : "password"}
-                                                        placeholder="Enter your password"
-                                                        {...field}
-                                                    />
-                                                    <Button
-                                                        type="button"
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                                        onClick={() => setShowPassword(!showPassword)}
-                                                    >
-                                                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                                    </Button>
-                                                </div>
+                                                <PasswordInput {...field} name="password" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -133,9 +117,9 @@ const AuthPage = () => {
                         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                             <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Credentials:</h4>
                             <p className="text-sm text-blue-800">
-                                Username: <code className="bg-blue-100 px-1 rounded">admin</code>
+                                Username: <code className="bg-blue-100 px-1 rounded">Admin</code>
                                 <br />
-                                Password: <code className="bg-blue-100 px-1 rounded">admin123</code>
+                                Password: <code className="bg-blue-100 px-1 rounded">Admin@123</code>
                             </p>
                         </div>
 
