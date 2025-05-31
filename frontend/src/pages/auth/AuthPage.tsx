@@ -35,7 +35,7 @@ const AuthPage = () => {
         try {
             const response = await AuthService.login(data);
             if (response.status === 200) {
-                toast.success("Login Successful", {
+                toast.success(`Login Successful`, {
                     description: formatTimestamp(new Date()),
                     action: {
                         label: "Undo",

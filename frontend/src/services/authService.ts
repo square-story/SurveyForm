@@ -6,7 +6,7 @@ import type { AxiosResponse } from "axios";
 
 export const AuthService = {
     async login(data: LoginData): Promise<AxiosResponse<AuthResponse>> {
-        const response = await axiosInstance.post(`${env.API_URL}/auth/login`, data);
+        const response: AxiosResponse<AuthResponse> = await axiosInstance.post(`${env.API_URL}/auth/login`, data);
         TokenUtils.setToken(response.data.token);
         return response;
     },
@@ -16,7 +16,7 @@ export const AuthService = {
         TokenUtils.removeToken();
     },
 
-    async refreshToken(): Promise<AxiosResponse> {
-        return await axiosInstance.post(`${env.API_URL}/auth/refresh-token`);
+    async refreshToken(): Promise<AxiosResponse<AuthResponse>> {
+        return (await axiosInstance.post(`${env.API_URL}/auth/refresh-token`)).data;
     }
 }
