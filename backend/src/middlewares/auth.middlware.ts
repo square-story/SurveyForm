@@ -1,5 +1,6 @@
+import { HttpResponse, HttpStatus } from "@/constants";
 import { AuthJwtPayload } from "@/types/jwt-payload";
-import { verifyAccessToken } from "@/utils";
+import { createHttpError, verifyAccessToken } from "@/utils";
 import { Request, Response, NextFunction } from "express";
 
 declare module "express-serve-static-core" {
@@ -13,12 +14,12 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
+        throw createHttpError(HttpStatus.UNAUTHORIZED, HttpResponse.NO_TOKEN)
     }
     try {
         const payload = verifyAccessToken(token) as AuthJwtPayload;
         if (!payload) {
-            return res.status(401).json({ error: 'Invalid token' });
+            throw createHttpError(HttpStatus.UNAUTHORIZED, HttpResponse.NO_TOKEN);
         }
 
         req.user = payload;
@@ -26,6 +27,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     } catch (error) {
         console.error("Authentication error:", error);
-        return res.status(401).json({ error: 'Invalid token' });
+        throw createHttpError(HttpStatus.UNAUTHORIZED, HttpResponse.UNAUTHORIZED);
     }
 }
