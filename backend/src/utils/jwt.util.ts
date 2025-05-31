@@ -19,7 +19,6 @@ export function verifyAccessToken(token: string) {
     try {
         return jwt.verify(token, ACCESS_KEY);
     } catch (err) {
-        console.error(err)
         return null;
     }
 }
@@ -28,7 +27,6 @@ export function verifyRefreshToken(token: string) {
     try {
         return jwt.verify(token, REFRESH_KEY);
     } catch (err) {
-        console.error(err)
         return null;
     }
 }

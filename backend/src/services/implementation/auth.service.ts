@@ -4,7 +4,7 @@ import { IAdminRepository } from "@/repositories/interface/IAdminRepository";
 import { DI_TYPES } from "@/core/types";
 import { comparePassword, createHttpError, generateAccessToken, generateRefreshToken, verifyRefreshToken } from "@/utils";
 import { HttpResponse, HttpStatus } from "@/constants";
-import { AuthJwtPayload } from "../types/jwt-payload";
+import { AuthJwtPayload } from "@/types/jwt-payload";
 
 @injectable()
 export class AuthService implements IAuthService {
