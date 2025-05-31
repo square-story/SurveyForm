@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import { FileText, Shield } from "lucide-react"
+import { FileText } from "lucide-react"
+import { useSelector } from "react-redux"
 
 const LandingPage = () => {
+    const { isAuthenticated } = useSelector((state: { auth: { isAuthenticated: boolean } }) => state.auth)
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
             <header className="bg-white shadow-sm border-b">
@@ -13,9 +15,8 @@ const LandingPage = () => {
                             <h1 className="text-2xl font-bold text-gray-900">Survey Portal</h1>
                         </div>
                         <Button variant="outline" asChild>
-                            <Link to="/login">
-                                <Shield className="w-4 h-4 mr-2" />
-                                Admin Login
+                            <Link to={isAuthenticated ? "/admin" : "/login"}>
+                                {isAuthenticated ? "Go to Dashboard" : "Login"}
                             </Link>
                         </Button>
                     </div>

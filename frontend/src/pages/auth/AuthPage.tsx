@@ -12,10 +12,14 @@ import { loginSchema } from "@/schema/authSchema"
 import { formatTimestamp } from "@/utils/formatDate"
 import { AuthService } from "@/services/authService"
 import { PasswordInput } from "@/components/common/password-input"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/store"
+import { setAuth } from "@/store/slices/authSlice"
 
 type LoginFormData = z.infer<typeof loginSchema>
 
 const AuthPage = () => {
+    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -41,6 +45,8 @@ const AuthPage = () => {
                         onClick: () => console.log("Undo"),
                     },
                 })
+
+                dispatch(setAuth({ isAuthenticated: true, accessToken: response.data.token }));
 
                 navigate("/admin")
             } else {
