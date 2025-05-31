@@ -3,20 +3,28 @@ import { TokenUtils } from "@/utils/tokenUtils";
 import { env } from "@/config/env";
 import type { AuthResponse, LoginData } from "./interfaces";
 import type { AxiosResponse } from "axios";
+import { extractAxiosErrorMessage } from "@/utils/errorMessage";
 
 export const AuthService = {
     async login(data: LoginData): Promise<AxiosResponse<AuthResponse>> {
-        const response: AxiosResponse<AuthResponse> = await axiosInstance.post(`${env.API_URL}/auth/login`, data);
-        TokenUtils.setToken(response.data.token);
-        return response;
+        try {
+            const response: AxiosResponse<AuthResponse> = await axiosInstance.post(`${env.API_URL}/auth/login`, data);
+            console.log("Login response:", response);
+            TokenUtils.setToken(response.data.token);
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Login failed. Please try again.");
+            throw new Error(errorMessage);
+        }
     },
 
     async logout(): Promise<void> {
-        await axiosInstance.post(`${env.API_URL}/auth/logout`);
-        TokenUtils.removeToken();
+        try {
+            await axiosInstance.post(`${env.API_URL}/auth/logout`);
+            TokenUtils.removeToken();
+        } catch (error) {
+            const errorMessage = extractAxiosErrorMessage(error, "Logout failed. Please try again.");
+            throw new Error(errorMessage);
+        }
     },
-
-    async refreshToken(): Promise<AxiosResponse<AuthResponse>> {
-        return (await axiosInstance.post(`${env.API_URL}/auth/refresh-token`)).data;
-    }
 }
