@@ -1,12 +1,11 @@
+import { RouterProvider } from 'react-router-dom'
 import './App.css'
-import { ConfettiButton } from './components/magicui/confetti'
+import { router } from './router/AppRouter'
 
 function App() {
 
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center">
-      <ConfettiButton>Confetti 🎉</ConfettiButton>
-    </div>
+    <RouterProvider router={router} />
   )
 }
 
