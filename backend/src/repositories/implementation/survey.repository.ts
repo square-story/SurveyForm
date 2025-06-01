@@ -32,7 +32,6 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
         try {
             return await this.findOne({
                 $or: [
-                    { name: data.name },
                     { email: data.email },
                     { phone: data.phone }
                 ]
