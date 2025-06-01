@@ -8,7 +8,7 @@ const LandingPage = () => {
         <div className="min-h-screen flex flex-col">
             <NavBar />
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <ScrollArea className="h-[450px] w-full rounded-md border p-4">
+                <ScrollArea className="h-[600px] w-full rounded-md border p-4">
                     <MainContent />
                     <SurveyForm />
                 </ScrollArea>
