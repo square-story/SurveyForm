@@ -79,7 +79,7 @@ const SurveyForm = () => {
                             Submit Another Survey
                         </Button>
                         <Button variant="outline" asChild className="w-full">
-                            <Link to="/admin">Admin Login</Link>
+                            <Link to="/login">Admin Login</Link>
                         </Button>
                     </div>
                 </CardContent>
