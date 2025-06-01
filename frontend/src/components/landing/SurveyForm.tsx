@@ -53,7 +53,14 @@ const SurveyForm = () => {
                 })
             }
         } catch (error) {
-            toast.error(`Error submitting survey: ${error instanceof Error ? error.message : "Unknown error"}`)
+            toast.error(`${error instanceof Error ? error.message : "Unknown error"}`);
+            if (error instanceof Error && error.message === "Survey with this email already exists") {
+                form.setFocus("email")
+                form.setError("email", { "type": "manual", "message": "This email is already registered. Please use a different email." })
+            } else {
+                form.setError("phone", { "type": "manual", "message": "This phone number is already registered. Please use a different phone number." })
+                form.setFocus("phone")
+            }
         }
     }
 

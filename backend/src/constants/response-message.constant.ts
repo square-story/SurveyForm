@@ -36,4 +36,6 @@ export enum HttpResponse {
     SURVEY_RESPONSE_FAILED = "Failed to submit survey response",
     SURVEY_RESPONSE_NOT_FOUND = "Survey response not found",
     SURVEY_ALREADY_EXISTS = "Survey with this details already exists",
+    SURVEY_PHONE_ALREADY_EXISTS = "Survey with this phone number already exists",
+    SURVEY_EMAIL_ALREADY_EXISTS = "Survey with this email already exists",
 }; 
