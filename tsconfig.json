@@ -8,7 +8,6 @@
     "skipLibCheck": true,
     "outDir": "dist"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["frontend/src", "backend/src"],
+  "exclude": ["dist", "node_modules"]
 }

@@ -1,17 +1,20 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useAdminDashboard } from "@/hooks/useAdminDashboard"
 import { AuthService } from "@/services/authService"
 import type { AppDispatch } from "@/store"
 import { logout } from "@/store/slices/authSlice"
-import { BarChart3, Download, LogOut, Search, Users } from "lucide-react"
+import { BarChart3, Download, Eye, LogOut, Search, Users } from "lucide-react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { toast } from "sonner"
 
 export default function AdminPage() {
 
   const { stats, loading, error } = useAdminDashboard()
+  const [searchValue, setSearchValue] = useState<string>("")
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -33,6 +36,10 @@ export default function AdminPage() {
       toast.error("Failed to log out")
     }
   }
+
+  const filteredSurveys = stats?.surveys.filter((submission) => {
+    return submission.name.toLowerCase().includes(searchValue.toLowerCase()) || submission.email.toLowerCase().includes(searchValue.toLowerCase()) || submission.nationality.toLowerCase().includes(searchValue.toLowerCase())
+  })
 
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>
@@ -144,6 +151,8 @@ export default function AdminPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   placeholder="Search by name, email, or nationality..."
                   className="pl-10"
                 />
@@ -152,6 +161,33 @@ export default function AdminPage() {
 
             {/* Table */}
             <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Nationality</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredSurveys?.map((submission) => (
+                    <TableRow key={submission._id}>
+                      <TableCell>{submission.name}</TableCell>
+                      <TableCell>{submission.email}</TableCell>
+                      <TableCell>{submission.nationality}</TableCell>
+                      <TableCell>{submission.status}</TableCell>
+                      <TableCell>
+                        <Button variant="outline" size="sm">
+                          <Eye className="w-4 h-4 mr-2" />
+                          View
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </CardContent>
         </Card>
