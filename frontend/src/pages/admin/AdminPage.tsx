@@ -6,6 +6,7 @@ import { useAdminDashboard } from "@/hooks/useAdminDashboard"
 import { AuthService } from "@/services/authService"
 import type { AppDispatch } from "@/store"
 import { logout } from "@/store/slices/authSlice"
+import { formatTimestamp } from "@/utils/formatDate"
 import { BarChart3, Download, Eye, LogOut, Search, Users } from "lucide-react"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
@@ -167,7 +168,7 @@ export default function AdminPage() {
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
                     <TableHead>Nationality</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>Submitted At</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -177,7 +178,7 @@ export default function AdminPage() {
                       <TableCell>{submission.name}</TableCell>
                       <TableCell>{submission.email}</TableCell>
                       <TableCell>{submission.nationality}</TableCell>
-                      <TableCell>{submission.status}</TableCell>
+                      <TableCell>{formatTimestamp(submission.createdAt)}</TableCell>
                       <TableCell>
                         <Button variant="outline" size="sm">
                           <Eye className="w-4 h-4 mr-2" />
