@@ -3,12 +3,17 @@ import { AuthService } from "@/services/authService"
 import type { AppDispatch, RootState } from "@/store"
 import { logout } from "@/store/slices/authSlice"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "sonner"
 
 const AdminPage = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { user } = useSelector((state: RootState) => state.auth)
   const handleLogout = async () => {
-    await AuthService.logout()
+    toast.promise(AuthService.logout(), {
+      loading: "Logging out...",
+      success: "Logged out successfully!",
+      error: "Failed to log out"
+    })
     dispatch(logout())
   }
   return (
