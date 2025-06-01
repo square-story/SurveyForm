@@ -1,7 +1,6 @@
 import { BaseRepository } from "../base.repository";
 import Admin, { IAdminModel } from "@/models/admin.model";
 import { IAdminRepository } from "../interface/IAdminRepository";
-import { Types } from "mongoose";
 import { toObjectId } from "@/utils";
 
 export class AdminRepository extends BaseRepository<IAdminModel> implements IAdminRepository {

@@ -4,4 +4,7 @@ export const DI_TYPES = {
     AdminRepository: Symbol.for('AdminRepository'),
     AdminService: Symbol.for('AdminService'),
     AdminController: Symbol.for('AdminController'),
+    SurveyRepository: Symbol.for('SurveyRepository'),
+    SurveyService: Symbol.for('SurveyService'),
+    SurveyController: Symbol.for('SurveyController'),
 }

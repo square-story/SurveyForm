@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { notFoundHandler } from "./middlewares/not-found.middleware";
 import { errorHandler } from "./middlewares/error.middlware";
 import { authRouter } from "./routes/auth.route";
+import { surveyRouter } from "./routes/survey.route";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(errorLogger);
 app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
+app.use("/api/surveys", surveyRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

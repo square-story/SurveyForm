@@ -13,8 +13,9 @@ import { Button } from "../ui/button"
 import { Link } from "react-router-dom"
 import { Textarea } from "../ui/textarea"
 import { OnConfetti } from "@/utils/on-conffite"
+import { surveyService } from "@/services/surveyService"
 
-type SurveyFormData = z.infer<typeof surveySchema>
+export type SurveyFormData = z.infer<typeof surveySchema>
 
 const SurveyForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false)
@@ -38,27 +39,21 @@ const SurveyForm = () => {
 
     const onSubmit = async (data: SurveyFormData) => {
         try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 2000))
+            const response = await surveyService.createSurvey(data)
 
-            console.log("Survey Data:", data)
-
-            setIsSubmitted(true)
-            toast.success("Survey submitted successfully!", {
-                description: "Thank you for your feedback!",
-                action: {
-                    label: "Undo",
-                    onClick: () => {
-                        setIsSubmitted(false)
-                        form.reset()
-                    },
-                },
-            })
-            OnConfetti()
+            if (response.status === 201) {
+                setIsSubmitted(true)
+                OnConfetti()
+                toast.success("Survey submitted successfully!", {
+                    description: "Thank you for your participation.",
+                })
+            } else {
+                toast.error("Failed to submit survey. Please try again later.", {
+                    description: response.data.message || "Unknown error",
+                })
+            }
         } catch (error) {
-            toast.error("An error occurred while submitting the survey. Please try again later.", {
-                description: error instanceof Error ? error.message : "Unknown error",
-            })
+            toast.error(`Error submitting survey: ${error instanceof Error ? error.message : "Unknown error"}`)
         }
     }
 

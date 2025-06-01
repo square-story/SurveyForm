@@ -1,0 +1,8 @@
+import { ISurveyModel } from "@/models/survey.model";
+import { ISurvey } from "shared/types";
+
+export interface ISurveyRepository {
+    findSurveyById(id: string): Promise<ISurveyModel | null>;
+    createSurvey(data: ISurvey): Promise<ISurveyModel>;
+    findSurvey(data: ISurvey): Promise<ISurveyModel | null>;
+}
