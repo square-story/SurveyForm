@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { useAdminDashboard } from "@/hooks/useAdminDashboard"
 import { AuthService } from "@/services/authService"
 import type { AppDispatch } from "@/store"
 import { logout } from "@/store/slices/authSlice"
@@ -9,6 +10,8 @@ import { useDispatch } from "react-redux"
 import { toast } from "sonner"
 
 export default function AdminPage() {
+
+  const { stats, loading, error } = useAdminDashboard()
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -31,6 +34,12 @@ export default function AdminPage() {
     }
   }
 
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>
+  }
+  if (error) {
+    return <div className="flex items-center justify-center h-screen text-red-500">{error}</div>
+  }
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -63,7 +72,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium ">Total Submissions</p>
-                  <p className="text-3xl font-bold ">{8}</p>
+                  <p className="text-3xl font-bold ">{stats?.totalSurveys}</p>
                 </div>
                 <Users className="w-8 h-8 text-blue-600" />
               </div>
@@ -75,7 +84,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium ">New</p>
-                  <p className="text-3xl font-bold text-green-600">{5}</p>
+                  <p className="text-3xl font-bold text-green-600">{stats?.newSurveys}</p>
                 </div>
                 <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
                   <div className="w-3 h-3 bg-green-600 rounded-full animate-ping"></div>
@@ -90,7 +99,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium ">Reviewed</p>
-                  <p className="text-3xl font-bold text-blue-600">{6}</p>
+                  <p className="text-3xl font-bold text-blue-600">{stats?.reviewedSurveys}</p>
                 </div>
                 <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center relative">
                   <div className="w-3 h-3 bg-blue-600 rounded-full animate-ping absolute"></div>
@@ -105,7 +114,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium ">Archived</p>
-                  <p className="text-3xl font-bold ">{8}</p>
+                  <p className="text-3xl font-bold ">{stats?.totalArchived}</p>
                 </div>
                 <BarChart3 className="w-8 h-8 " />
               </div>

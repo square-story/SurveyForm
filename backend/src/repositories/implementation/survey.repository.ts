@@ -3,6 +3,7 @@ import { BaseRepository } from "../base.repository";
 import { toObjectId } from "@/utils";
 import { ISurvey } from "shared/types";
 import { ISurveyRepository } from "../interface/ISurveyRepository";
+import { ISurveyDashboard } from "@/types/ISurveyDashboard";
 
 export class SurveyRepository extends BaseRepository<ISurveyModel> implements ISurveyRepository {
     constructor() {
@@ -39,6 +40,37 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
         } catch (error) {
             console.error(error);
             throw new Error("Error finding survey");
+        }
+    }
+
+    async findAllSurveys(): Promise<ISurveyModel[]> {
+        try {
+            return await this.find({});
+        } catch (error) {
+            console.error(error);
+            throw new Error("Error finding all surveys");
+        }
+    }
+
+    async getStats(): Promise<ISurveyDashboard> {
+        try {
+            console.log("Fetching survey statistics...");
+            const totalSurveys = await this.countDocuments({});
+            const reviewedSurveys = await this.countDocuments({ status: "reviewed" });
+            const newSurveys = await this.countDocuments({ status: "new" });
+            const totalArchived = await this.countDocuments({ status: "archived" });
+            const surveys = await this.findAll();
+
+            return {
+                totalSurveys,
+                reviewedSurveys,
+                newSurveys,
+                totalArchived,
+                surveys
+            };
+        } catch (error) {
+            console.error(error);
+            throw new Error("Error getting survey stats");
         }
     }
 }

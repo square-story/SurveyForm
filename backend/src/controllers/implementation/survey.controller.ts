@@ -33,4 +33,20 @@ export class SurveyController implements ISurveyController {
             next(error);
         }
     }
+    findAllSurveys = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const surveys = await this._surveyService.findAllSurveys();
+            res.status(HttpStatus.OK).json(surveys);
+        } catch (error) {
+            next(error);
+        }
+    }
+    getStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const stats = await this._surveyService.getStats();
+            res.status(HttpStatus.OK).json(stats);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

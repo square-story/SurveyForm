@@ -17,6 +17,15 @@ export interface ISurvey {
     phone: string;
     address: string;
     message?: string | undefined;
+    status: "new" | "reviewed" | "archived";
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface ISurveyDashboard {
+    totalSurveys: number;
+    reviewedSurveys: number;
+    newSurveys: number;
+    totalArchived: number;
+    surveys: ISurvey[];
 }

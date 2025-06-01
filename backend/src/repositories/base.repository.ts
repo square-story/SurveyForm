@@ -38,6 +38,10 @@ export abstract class BaseRepository<T extends Document> {
         return document.save();
     }
 
+    async countDocuments(filter: FilterQuery<T> = {}): Promise<number> {
+        return this.model.countDocuments(filter).exec();
+    }
+
     async update(id: Types.ObjectId, data: Partial<T>): Promise<T | null> {
         return this.model.findByIdAndUpdate(id, data, { new: true });
     }

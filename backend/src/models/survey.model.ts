@@ -10,7 +10,8 @@ const SurveySchema = new Schema<ISurveyModel>({
     email: { type: String, required: true },
     phone: { type: String, required: true },
     address: { type: String, required: true },
-    message: { type: String, required: false }
+    message: { type: String, required: false },
+    status: { type: String, enum: ['new', 'reviewed', 'archived'], default: 'new', required: true }
 }, {
     timestamps: true,
 });

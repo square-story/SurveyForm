@@ -8,6 +8,8 @@ import { Router } from "express";
 const surveyRouter = Router();
 const surveyController = container.get<ISurveyController>(DI_TYPES.SurveyController);
 
+surveyRouter.get("/stats", surveyController.getStats);
+surveyRouter.get("/", surveyController.findAllSurveys);
 surveyRouter.get("/:id", surveyController.findSurveyById);
 surveyRouter.post("/", validate(surveySchema), surveyController.createSurvey);
 

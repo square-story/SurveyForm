@@ -29,4 +29,22 @@ export class SurveyService implements ISurveyService {
         }
         return await this._surveyRepository.createSurvey(data);
     }
+
+    async findAllSurveys(): Promise<ISurveyModel[]> {
+        try {
+            return await this._surveyRepository.findAllSurveys();
+        } catch (error) {
+            console.error(error);
+            throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
+        }
+    }
+
+    async getStats() {
+        try {
+            return await this._surveyRepository.getStats();
+        } catch (error) {
+            console.error(error);
+            throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
+        }
+    }
 }
