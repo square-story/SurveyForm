@@ -2,7 +2,6 @@ import { FileText } from "lucide-react"
 import { Button } from "../ui/button"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
-import ModeSwitch from "../mode-switch"
 
 const NavBar = () => {
     const { isAuthenticated } = useSelector((state: { auth: { isAuthenticated: boolean } }) => state.auth)
@@ -19,7 +18,6 @@ const NavBar = () => {
                             {isAuthenticated ? "Go to Dashboard" : "Admin Login"}
                         </Link>
                     </Button>
-                    <ModeSwitch />
                 </div>
             </div>
         </header>

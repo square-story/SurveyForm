@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import { Button } from "../ui/button"
 import { Link } from "react-router-dom"
 import { Textarea } from "../ui/textarea"
+import { OnConfetti } from "@/utils/on-conffite"
 
 type SurveyFormData = z.infer<typeof surveySchema>
 
@@ -53,6 +54,7 @@ const SurveyForm = () => {
                     },
                 },
             })
+            OnConfetti()
         } catch (error) {
             toast.error("An error occurred while submitting the survey. Please try again later.", {
                 description: error instanceof Error ? error.message : "Unknown error",
