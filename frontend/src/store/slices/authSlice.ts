@@ -29,7 +29,6 @@ const authSlice = createSlice({
             state.accessToken = null;
             state.isAuthenticated = false;
             TokenUtils.removeToken();
-            window.location.href = '/auth';
         }
     }
 });

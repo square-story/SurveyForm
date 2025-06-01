@@ -20,7 +20,7 @@ export class AuthService implements IAuthService {
 
         const isPasswordValid = await comparePassword(password, admin.password);
         if (!isPasswordValid) {
-            throw createHttpError(HttpStatus.UNAUTHORIZED, HttpResponse.INVALID_CREDENTIALS);
+            throw createHttpError(HttpStatus.BAD_REQUEST, HttpResponse.INVALID_CREDENTIALS);
         }
 
         const payload = { id: admin._id, username: admin.username };
