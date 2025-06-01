@@ -77,7 +77,7 @@ export default function AdminPage() {
                   <p className="text-sm font-medium ">New</p>
                   <p className="text-3xl font-bold text-green-600">{5}</p>
                 </div>
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
                   <div className="w-3 h-3 bg-green-600 rounded-full animate-ping"></div>
                   <div className="w-3 h-3 bg-green-600 rounded-full absolute"></div>
                 </div>
@@ -92,7 +92,7 @@ export default function AdminPage() {
                   <p className="text-sm font-medium ">Reviewed</p>
                   <p className="text-3xl font-bold text-blue-600">{6}</p>
                 </div>
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center relative">
+                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center relative">
                   <div className="w-3 h-3 bg-blue-600 rounded-full animate-ping absolute"></div>
                   <div className="w-3 h-3 bg-blue-600 rounded-full relative"></div>
                 </div>
