@@ -70,8 +70,8 @@ const SurveyForm = () => {
             <Card className="w-full max-w-md text-center mx-auto mt-10">
                 <CardContent className="pt-6">
                     <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
-                    <p className="text-gray-600 mb-6">
+                    <h2 className="text-2xl font-bold mb-2">Thank You!</h2>
+                    <p className="mb-6">
                         Your survey has been submitted successfully. We appreciate your participation.
                     </p>
                     <div className="space-y-3">

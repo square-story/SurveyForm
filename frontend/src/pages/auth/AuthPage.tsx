@@ -61,7 +61,7 @@ const AuthPage = () => {
         }
     }
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -70,8 +70,8 @@ const AuthPage = () => {
                             <Shield className="w-8 h-8 text-white" />
                         </div>
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Login</h1>
-                    <p className="text-gray-600">Access the survey management dashboard</p>
+                    <h1 className="text-3xl font-bold mb-2">Admin Login</h1>
+                    <p>Access the survey management dashboard</p>
                 </div>
 
                 <Card>
