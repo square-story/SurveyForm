@@ -1,3 +1,4 @@
+import { isValidPhoneNumber } from "react-phone-number-input";
 import { z } from "zod";
 
 export const surveySchema = z.object({
@@ -16,9 +17,7 @@ export const surveySchema = z.object({
     email: z.string().email("Please enter a valid email address").min(1, "Email is required"),
     phone: z
         .string()
-        .min(10, "Phone number must be at least 10 digits")
-        .max(15, "Phone number must be less than 15 digits")
-        .regex(/^[+]?[1-9][\d\s\-()]{9,14}$/, "Please enter a valid phone number"),
+        .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
     address: z
         .string()
         .min(10, "Address must be at least 10 characters")

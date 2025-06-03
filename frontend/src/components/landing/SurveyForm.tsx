@@ -14,6 +14,7 @@ import { Link } from "react-router-dom"
 import { Textarea } from "../ui/textarea"
 import { OnConfetti } from "@/utils/on-conffite"
 import { surveyService } from "@/services/surveyService"
+import { PhoneInput } from "../phone-input"
 
 export type SurveyFormData = z.infer<typeof surveySchema>
 
@@ -39,6 +40,7 @@ const SurveyForm = () => {
 
     const onSubmit = async (data: SurveyFormData) => {
         try {
+            console.log("Submitting survey data:", data)
             const response = await surveyService.createSurvey(data)
 
             if (response.status === 201) {
@@ -183,7 +185,7 @@ const SurveyForm = () => {
                                     <FormItem>
                                         <FormLabel>Phone Number *</FormLabel>
                                         <FormControl>
-                                            <Input type="tel" placeholder="Enter your phone number" {...field} />
+                                            <PhoneInput {...field} defaultCountry="IN" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

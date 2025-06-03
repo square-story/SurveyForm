@@ -16,10 +16,7 @@ export const surveySchema = z
             .max(30, "Nationality must be less than 30 characters"),
         email: z.string().email("Please enter a valid email address").min(1, "Email is required"),
         phone: z
-            .string()
-            .min(10, "Phone number must be at least 10 digits")
-            .max(15, "Phone number must be less than 15 digits")
-            .regex(/^[+]?[1-9][\d\s\-()]{9,14}$/, "Please enter a valid phone number"),
+            .string(),
         address: z
             .string()
             .min(10, "Address must be at least 10 characters")
