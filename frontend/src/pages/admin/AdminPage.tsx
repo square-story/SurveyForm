@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { OnConfetti } from "@/utils/on-conffite"
+import Loading from "@/components/admin/data-table-skelton"
 
 export default function AdminPage() {
 
@@ -374,10 +375,7 @@ export default function AdminPage() {
   const handleRefresh = () => {
     OnConfetti()
   }
-
-  if (loading || tableLoading) {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>
-  }
+  if (tableLoading || loading) return <Loading />
   if (error) {
     return <div className="flex items-center justify-center h-screen text-red-500">{error}</div>
   }
