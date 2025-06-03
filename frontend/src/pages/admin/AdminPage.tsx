@@ -24,9 +24,10 @@ import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { OnConfetti } from "@/utils/on-conffite"
 import Loading from "@/components/admin/data-table-skelton"
+import { useConfirm } from "@/components/useConfirm"
 
 export default function AdminPage() {
-
+  const { confirm, ConfirmDialog } = useConfirm()
   const { stats, loading, error } = useAdminDashboard()
   const [surveys, setSurveys] = useState<ISurvey[]>([])
   const [meta, setMeta] = useState({
@@ -310,7 +311,15 @@ export default function AdminPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this submission?")) return
+    const confirmed = await confirm({
+      title: "Delete Submission",
+      description: "Are you sure you want to delete this submission? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      icon: <Trash2 className="text-red-600" />, // optional
+    })
+
+    if (!confirmed) return
 
     try {
       await surveyService.deleteSurvey(id)
@@ -337,8 +346,15 @@ export default function AdminPage() {
       return
     }
 
-    if (action === "delete" && !confirm(`Are you sure you want to delete ${selectedRows.length} submissions?`)) {
-      return
+    if (action === "delete") {
+      const confirmed = await confirm({
+        title: "Bulk Delete",
+        description: `Are you sure you want to delete ${selectedRows.length} submissions? This action cannot be undone.`,
+        confirmText: "Delete",
+        cancelText: "Cancel",
+        icon: <Trash2 className="text-red-600" />,
+      })
+      if (!confirmed) return
     }
 
     try {
@@ -735,6 +751,7 @@ export default function AdminPage() {
           )}
         </DialogContent>
       </Dialog>
+      {ConfirmDialog}
     </div>
   )
 }
