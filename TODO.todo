@@ -1,0 +1,15 @@
+
+Todo:
+  ✔ Axios Setup @today @started(25-05-31 11:22) @done(25-05-31 13:23) @lasted(2h1m20s)
+  ✔ Install Axios @today @done(25-05-31 13:23)
+  ✔ Create Survey Form Component @today @done(25-06-03 18:45)
+  ✔ Create Survey Form @tomorrow @done(25-06-03 18:45)
+  ✔ Integrate API for Survey Data @next week @done(25-06-03 18:46)
+  ✔ Implement Form Validation @next week @done(25-06-03 18:46)
+  ✔ Test Survey Form Functionality @next week @done(25-06-03 18:46)
+  ☐ Deploy Survey Form @today
+  ☐ Write Documentation @today
+  ☐ Update README @today
+  ☐ Update the search bar with debounce @today
+  ☐ Optimize performance for large datasets @today
+  ☐ delete Prompt component @today @started(25-06-03 18:52)
