@@ -79,4 +79,30 @@ export class SurveyController implements ISurveyController {
             next(error);
         }
     }
+    bulkDeleteSurveys = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const { ids } = req.body;
+            if (!Array.isArray(ids) || ids.length === 0) {
+                res.status(HttpStatus.BAD_REQUEST).json({ message: HttpResponse.INVALID_IDS });
+                return;
+            }
+            await this._surveyService.bulkDeleteSurveys(ids);
+            res.status(HttpStatus.NO_CONTENT).send();
+        } catch (error) {
+            next(error);
+        }
+    }
+    bulkUpdateSurveys = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const { ids, status } = req.body;
+            if (!Array.isArray(ids) || ids.length === 0) {
+                res.status(HttpStatus.BAD_REQUEST).json({ message: HttpResponse.INVALID_IDS });
+                return;
+            }
+            await this._surveyService.bulkUpdateSurveysStatus(ids, status);
+            res.status(HttpStatus.NO_CONTENT).send();
+        } catch (error) {
+            next(error);
+        }
+    }
 }

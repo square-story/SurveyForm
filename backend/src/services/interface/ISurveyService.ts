@@ -9,4 +9,6 @@ export interface ISurveyService {
     getStats(): Promise<ISurveyDashboard>;
     updateSurveyStatus(id: string, status: string): Promise<ISurveyModel>;
     deleteSurvey(id: string): Promise<void>;
+    bulkDeleteSurveys(ids: string[]): Promise<void>;
+    bulkUpdateSurveysStatus(ids: string[], status: string): Promise<void>;
 }

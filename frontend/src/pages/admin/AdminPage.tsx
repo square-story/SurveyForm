@@ -329,7 +329,7 @@ export default function AdminPage() {
   }
 
   const handleBulkAction = async (action: "review" | "archive" | "delete") => {
-    const selectedRows = Object.keys(rowSelection).map((index) => data[Number.parseInt(index)])
+    const selectedRows: ISurvey[] = Object.keys(rowSelection).map((index) => surveys[Number.parseInt(index)])
     if (selectedRows.length === 0) {
       toast.error("No Selections", {
         description: "Please select at least one submission."
@@ -345,7 +345,7 @@ export default function AdminPage() {
       const selectedIds = selectedRows.map((row) => row._id)
 
       if (action === "delete") {
-        await surveyService.bulkDelete(selectedIds)
+        await surveyService.bulkDeleteSurveys(selectedIds)
 
         setSurveys((prev) => prev.filter((item) => !selectedIds.includes(item._id)))
         setMeta((prev) => ({ ...prev, totalCount: prev.totalCount - selectedRows.length }))
@@ -355,7 +355,7 @@ export default function AdminPage() {
         })
       } else {
         const newStatus = action === "review" ? "reviewed" : "archived"
-        await surveyService.bulkUpdateStatus(selectedIds, newStatus)
+        await surveyService.bulkUpdateSurveys(selectedIds, newStatus)
 
         setSurveys((prev) => prev.map((item) => (selectedIds.includes(item._id) ? { ...item, status: newStatus } : item)))
 

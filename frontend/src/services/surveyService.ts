@@ -60,5 +60,23 @@ export const surveyService = {
             const errorMessage = extractAxiosErrorMessage(error, "Error deleting survey. Please try again.");
             throw new Error(errorMessage);
         }
+    },
+    bulkDeleteSurveys: async (ids: string[]): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.delete("/surveys/bulk", { data: { ids } });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error bulk deleting surveys. Please try again.");
+            throw new Error(errorMessage);
+        }
+    },
+    bulkUpdateSurveys: async (ids: string[], status: string): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.patch("/surveys/bulk", { ids, status });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error bulk updating surveys. Please try again.");
+            throw new Error(errorMessage);
+        }
     }
 };

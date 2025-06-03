@@ -9,7 +9,6 @@ export const AuthService = {
     async login(data: LoginData): Promise<AxiosResponse<AuthResponse>> {
         try {
             const response: AxiosResponse<AuthResponse> = await axiosInstance.post(`${env.API_URL}/auth/login`, data);
-            console.log("Login response:", response);
             TokenUtils.setToken(response.data.token);
             return response;
         } catch (error: unknown) {

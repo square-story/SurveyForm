@@ -74,4 +74,34 @@ export class SurveyService implements ISurveyService {
             throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
         }
     }
+
+    async bulkDeleteSurveys(ids: string[]): Promise<void> {
+        try {
+            for (const id of ids) {
+                const survey = await this._surveyRepository.findSurveyById(id);
+                if (!survey) {
+                    throw createHttpError(HttpStatus.NOT_FOUND, HttpResponse.SURVEY_NOT_FOUND);
+                }
+            }
+            await Promise.all(ids.map(id => this._surveyRepository.deleteSurvey(id)));
+        } catch (error) {
+            console.error(error);
+            throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
+        }
+    }
+    async bulkUpdateSurveysStatus(ids: string[], status: string): Promise<void> {
+        try {
+            const surveys = await Promise.all(ids.map(id => this._surveyRepository.findSurveyById(id)));
+            for (const survey of surveys) {
+                if (!survey) {
+                    throw createHttpError(HttpStatus.NOT_FOUND, HttpResponse.SURVEY_NOT_FOUND);
+                }
+                survey.status = status as "new" | "reviewed" | "archived";
+                await survey.save();
+            }
+        } catch (error) {
+            console.error(error);
+            throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
+        }
+    }
 }
