@@ -8,13 +8,16 @@ import { Router } from "express";
 const surveyRouter = Router();
 const surveyController = container.get<ISurveyController>(DI_TYPES.SurveyController);
 
+// Specific routes
 surveyRouter.get("/stats", surveyController.getStats);
 surveyRouter.delete("/bulk", surveyController.bulkDeleteSurveys);
-surveyRouter.get("/", surveyController.findAllSurveys);
-surveyRouter.get("/:id", surveyController.findSurveyById);
-surveyRouter.post("/", validate(surveySchema), surveyController.createSurvey);
+surveyRouter.patch("/bulk", surveyController.bulkUpdateSurveys);
+
+// Parameterized and general routes
 surveyRouter.patch("/:id/status", surveyController.updateSurveyStatus);
 surveyRouter.delete("/:id", surveyController.deleteSurvey);
-surveyRouter.patch('/bulk', surveyController.bulkUpdateSurveys);
+surveyRouter.post("/", validate(surveySchema), surveyController.createSurvey);
+surveyRouter.get("/", surveyController.findAllSurveys);
+surveyRouter.get("/:id", surveyController.findSurveyById);
 
 export { surveyRouter };
