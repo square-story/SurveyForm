@@ -27,6 +27,8 @@ import Loading from "@/components/admin/data-table-skelton"
 import { useConfirm } from "@/components/useConfirm"
 import { useDebounce } from "@/hooks/useDebounce"
 import { setSurveyStats } from "@/store/slices/surveySlice"
+import { convertToCSV } from "@/helpers/convertToCSV"
+import { downloadCSV } from "@/helpers/downloadCSV"
 
 export default function AdminPage() {
   const { confirm, ConfirmDialog } = useConfirm()
@@ -397,6 +399,19 @@ export default function AdminPage() {
     }
   }
 
+  const handleExportCSV = () => {
+    if (!surveys.length) {
+      toast.error("No data to export");
+      return;
+    }
+    const csv = convertToCSV(surveys)
+    downloadCSV(csv);
+    toast.success("CSV Exported Successfully", {
+      description: "The survey submissions have been exported to CSV.",
+    });
+    OnConfetti(0.1)
+  };
+
   const handleRefresh = async () => {
     OnConfetti(0.5)
     setTableLoading(true);
@@ -511,7 +526,7 @@ export default function AdminPage() {
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Refresh
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button onClick={handleExportCSV} variant="outline" size="sm">
                   <Download className="w-4 h-4 mr-2" />
                   Export CSV
                 </Button>
