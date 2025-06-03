@@ -3,7 +3,7 @@ import type { SurveyFormData } from "@/components/landing/SurveyForm";
 import { extractAxiosErrorMessage } from "@/utils/errorMessage";
 import type { SurveyResponse } from "./interfaces";
 import type { AxiosResponse } from "axios";
-import type { ISurveyDashboard } from "shared/types";
+import type { ISurveyDashboard, ISurveyParams, ISurveyResponse } from "shared/types";
 
 export const surveyService = {
     findSurveyById: async (id: string) => {
@@ -24,9 +24,10 @@ export const surveyService = {
             throw new Error(errorMessage);
         }
     },
-    findAllSurveys: async () => {
+    findAllSurveys: async (params: ISurveyParams) => {
         try {
-            const response = await axiosInstance.get("/surveys");
+            const response: AxiosResponse<ISurveyResponse> = await axiosInstance.get("/surveys", { params });
+            console.log("Response from findAllSurveys:", response.data.meta);
             return response.data;
         } catch (error: unknown) {
             const errorMessage = extractAxiosErrorMessage(error, "Error fetching all surveys. Please try again.");
@@ -39,6 +40,42 @@ export const surveyService = {
             return response;
         } catch (error: unknown) {
             const errorMessage = extractAxiosErrorMessage(error, "Error fetching survey statistics. Please try again.");
+            throw new Error(errorMessage);
+        }
+    },
+    updateSurveyStatus: async (id: string, status: string): Promise<AxiosResponse<SurveyResponse>> => {
+        try {
+            const response = await axiosInstance.patch(`/surveys/${id}/status`, { status });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error updating survey status. Please try again.");
+            throw new Error(errorMessage);
+        }
+    },
+    deleteSurvey: async (id: string): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.delete(`/surveys/${id}`);
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error deleting survey. Please try again.");
+            throw new Error(errorMessage);
+        }
+    },
+    bulkDeleteSurveys: async (ids: string[]): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.delete("/surveys/bulk", { data: { ids } });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error bulk deleting surveys. Please try again.");
+            throw new Error(errorMessage);
+        }
+    },
+    bulkUpdateSurveys: async (ids: string[], status: string): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.patch("/surveys/bulk", { ids, status });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error bulk updating surveys. Please try again.");
             throw new Error(errorMessage);
         }
     }

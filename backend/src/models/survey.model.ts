@@ -1,4 +1,4 @@
-import { ISurvey, IGender } from "shared/types";
+import { ISurvey } from "shared/types";
 import { Document, model, Schema } from "mongoose";
 
 export interface ISurveyModel extends Document, Omit<ISurvey, "_id"> { }

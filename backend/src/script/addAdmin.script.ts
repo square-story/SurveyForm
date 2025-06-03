@@ -21,7 +21,6 @@ const seedAdmin = async () => {
 
         const admin = new Admin(adminData);
         await admin.save();
-
         console.log('Admin added:', admin);
     } catch (error) {
         console.error('Error seeding admin:', error);

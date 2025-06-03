@@ -38,4 +38,6 @@ export enum HttpResponse {
     SURVEY_ALREADY_EXISTS = "Survey with this details already exists",
     SURVEY_PHONE_ALREADY_EXISTS = "Survey with this phone number already exists",
     SURVEY_EMAIL_ALREADY_EXISTS = "Survey with this email already exists",
+    SURVEY_STATUS_UPDATED = "Survey status updated successfully",
+    INVALID_IDS = "Invalid IDs provided",
 }; 
