@@ -13,7 +13,9 @@ export const surveySchema = z.object({
     nationality: z
         .string({
             required_error: "Please select a country",
-        }),
+        })
+        .min(2, "Nationality must be at least 2 characters")
+        .max(30, "Nationality must be less than 30 characters"),
     email: z.string().email("Please enter a valid email address").min(1, "Email is required"),
     phone: z
         .string()

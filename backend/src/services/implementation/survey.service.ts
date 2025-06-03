@@ -27,7 +27,8 @@ export class SurveyService implements ISurveyService {
         if (exist) {
             throw exist.email === data.email ? createHttpError(HttpStatus.CONFLICT, HttpResponse.SURVEY_EMAIL_ALREADY_EXISTS) : createHttpError(HttpStatus.CONFLICT, HttpResponse.SURVEY_PHONE_ALREADY_EXISTS);
         }
-        return await this._surveyRepository.createSurvey(data);
+        const name = data.name.trim().slice(0, 1).toUpperCase() + data.name.trim().slice(1).toLowerCase();
+        return await this._surveyRepository.createSurvey({ ...data, name });
     }
 
     async findAllSurveys(params: ISurveyParams): Promise<ISurveyResponse> {

@@ -59,9 +59,11 @@ const SurveyForm = () => {
             if (error instanceof Error && error.message === "Survey with this email already exists") {
                 form.setFocus("email")
                 form.setError("email", { "type": "manual", "message": "This email is already registered. Please use a different email." })
-            } else {
+            } else if (error instanceof Error && error.message === "Survey with this phone already exists") {
                 form.setError("phone", { "type": "manual", "message": "This phone number is already registered. Please use a different phone number." })
                 form.setFocus("phone")
+            } else {
+                form.setError("root", { "type": "manual", "message": "An unexpected error occurred. Please try again later." });
             }
         }
     }

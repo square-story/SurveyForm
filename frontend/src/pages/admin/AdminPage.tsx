@@ -26,6 +26,7 @@ import { OnConfetti } from "@/utils/on-conffite"
 import Loading from "@/components/admin/data-table-skelton"
 import { useConfirm } from "@/components/useConfirm"
 import { useDebounce } from "@/hooks/useDebounce"
+import { setSurveyStats } from "@/store/slices/surveySlice"
 
 export default function AdminPage() {
   const { confirm, ConfirmDialog } = useConfirm()
@@ -396,8 +397,10 @@ export default function AdminPage() {
     }
   }
 
-  const handleRefresh = () => {
-    OnConfetti()
+  const handleRefresh = async () => {
+    OnConfetti(0.5)
+    const response = await surveyService.getStats();
+    dispatch(setSurveyStats(response.data));
   }
   if (tableLoading || loading) return <Loading />
   if (error) {

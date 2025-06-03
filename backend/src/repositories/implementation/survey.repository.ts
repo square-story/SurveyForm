@@ -58,7 +58,7 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
                     $or: [
                         { name: { $regex: search, $options: "i" } },
                         { email: { $regex: search, $options: "i" } },
-                        { phone: { $regex: search, $options: "i" } }
+                        { nationality: { $regex: search, $options: "i" } }
                     ]
                 })
             })
@@ -68,8 +68,8 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
             return {
                 data: surveys as ISurvey[],
                 meta: {
-                    totalCount: await this.countDocuments({}),
-                    pageCount: Math.ceil(await this.countDocuments({}) / limit),
+                    totalCount: surveys.length,
+                    pageCount: Math.ceil(await this.countDocuments() / limit),
                     currentPage: page,
                     perPage: limit
                 }
