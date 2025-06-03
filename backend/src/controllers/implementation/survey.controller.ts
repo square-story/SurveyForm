@@ -35,8 +35,19 @@ export class SurveyController implements ISurveyController {
     }
     findAllSurveys = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const surveys = await this._surveyService.findAllSurveys();
-            res.status(HttpStatus.OK).json(surveys);
+            const { page, limit, sortBy, sortOrder, search, status } = req.query;
+            const surveys = await this._surveyService.findAllSurveys({
+                page: Number(page) || 1,
+                limit: Number(limit) || 10,
+                sortBy: sortBy as string | undefined || "createdAt",
+                sortOrder: sortOrder as "asc" | "desc" | undefined || "desc",
+                search: search as string | undefined,
+                status: status as "new" | "reviewed" | "archived" | undefined
+            });
+            res.status(HttpStatus.OK).json({
+                data: surveys.data,
+                meta: surveys.meta,
+            });
         } catch (error) {
             next(error);
         }

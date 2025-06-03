@@ -3,7 +3,7 @@ import type { SurveyFormData } from "@/components/landing/SurveyForm";
 import { extractAxiosErrorMessage } from "@/utils/errorMessage";
 import type { SurveyResponse } from "./interfaces";
 import type { AxiosResponse } from "axios";
-import type { ISurveyDashboard } from "shared/types";
+import type { ISurveyDashboard, ISurveyParams, ISurveyResponse } from "shared/types";
 
 export const surveyService = {
     findSurveyById: async (id: string) => {
@@ -24,9 +24,10 @@ export const surveyService = {
             throw new Error(errorMessage);
         }
     },
-    findAllSurveys: async () => {
+    findAllSurveys: async (params: ISurveyParams) => {
         try {
-            const response = await axiosInstance.get("/surveys");
+            const response: AxiosResponse<ISurveyResponse> = await axiosInstance.get("/surveys", { params });
+            console.log("Response from findAllSurveys:", response.data.meta);
             return response.data;
         } catch (error: unknown) {
             const errorMessage = extractAxiosErrorMessage(error, "Error fetching all surveys. Please try again.");

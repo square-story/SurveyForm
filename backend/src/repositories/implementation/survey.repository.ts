@@ -1,7 +1,7 @@
 import { ISurveyModel, Survey } from "@/models/survey.model";
 import { BaseRepository } from "../base.repository";
 import { toObjectId } from "@/utils";
-import { ISurvey } from "shared/types";
+import { ISurvey, ISurveyParams, ISurveyResponse } from "shared/types";
 import { ISurveyRepository } from "../interface/ISurveyRepository";
 import { ISurveyDashboard } from "@/types/ISurveyDashboard";
 
@@ -43,9 +43,37 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
         }
     }
 
-    async findAllSurveys(): Promise<ISurveyModel[]> {
+    async findAllSurveys(params: ISurveyParams): Promise<ISurveyResponse> {
         try {
-            return await this.find({});
+            const { page, limit, sortBy, sortOrder, search, status } = params;
+            const query: ISurveyParams = { page, limit, sortBy, sortOrder, search, status };
+            if (search) {
+                query.search = search.trim();
+            }
+            const skip = (page - 1) * limit;
+
+            const surveys = await this.model.find({
+                status: status || { $exists: true },
+                ...(search && {
+                    $or: [
+                        { name: { $regex: search, $options: "i" } },
+                        { email: { $regex: search, $options: "i" } },
+                        { phone: { $regex: search, $options: "i" } }
+                    ]
+                })
+            })
+                .sort({ [sortBy || "createdAt"]: (sortOrder === "asc" ? 1 : sortOrder === "desc" ? -1 : -1) })
+                .skip(skip)
+                .limit(limit);
+            return {
+                data: surveys as ISurvey[],
+                meta: {
+                    totalCount: await this.countDocuments({}),
+                    pageCount: Math.ceil(await this.countDocuments({}) / limit),
+                    currentPage: page,
+                    perPage: limit
+                }
+            };
         } catch (error) {
             console.error(error);
             throw new Error("Error finding all surveys");
@@ -54,7 +82,6 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
 
     async getStats(): Promise<ISurveyDashboard> {
         try {
-            console.log("Fetching survey statistics...");
             const totalSurveys = await this.countDocuments({});
             const reviewedSurveys = await this.countDocuments({ status: "reviewed" });
             const newSurveys = await this.countDocuments({ status: "new" });
@@ -74,3 +101,5 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
         }
     }
 }
+
+

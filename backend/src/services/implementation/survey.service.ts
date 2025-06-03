@@ -2,7 +2,7 @@ import { DI_TYPES } from "@/core/types";
 import { ISurveyModel } from "@/models/survey.model";
 import { ISurveyRepository } from "@/repositories/interface/ISurveyRepository";
 import { inject, injectable } from "inversify";
-import { ISurvey } from "shared/types";
+import { ISurvey, ISurveyParams, ISurveyResponse } from "shared/types";
 import { ISurveyService } from "../interface/ISurveyService";
 import { HttpResponse, HttpStatus } from "@/constants";
 import { createHttpError } from "@/utils";
@@ -30,9 +30,9 @@ export class SurveyService implements ISurveyService {
         return await this._surveyRepository.createSurvey(data);
     }
 
-    async findAllSurveys(): Promise<ISurveyModel[]> {
+    async findAllSurveys(params: ISurveyParams): Promise<ISurveyResponse> {
         try {
-            return await this._surveyRepository.findAllSurveys();
+            return await this._surveyRepository.findAllSurveys(params);
         } catch (error) {
             console.error(error);
             throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);

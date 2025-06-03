@@ -27,5 +27,23 @@ export interface ISurveyDashboard {
     reviewedSurveys: number;
     newSurveys: number;
     totalArchived: number;
-    surveys: ISurvey[];
+}
+
+export interface ISurveyParams {
+    page: number;
+    limit: number;
+    sortBy: string | undefined;
+    sortOrder: number | string | undefined;
+    search: string | undefined;
+    status: "new" | "reviewed" | "archived" | undefined;
+}
+
+export interface ISurveyResponse {
+    data: ISurvey[];
+    meta: {
+        totalCount: number;
+        pageCount: number;
+        currentPage: number;
+        perPage: number;
+    };
 }
