@@ -15,6 +15,7 @@ import { Textarea } from "../ui/textarea"
 import { OnConfetti } from "@/utils/on-conffite"
 import { surveyService } from "@/services/surveyService"
 import { PhoneInput } from "../phone-input"
+import { CountryDropdown } from "../country-dropdown"
 
 export type SurveyFormData = z.infer<typeof surveySchema>
 
@@ -40,7 +41,6 @@ const SurveyForm = () => {
 
     const onSubmit = async (data: SurveyFormData) => {
         try {
-            console.log("Submitting survey data:", data)
             const response = await surveyService.createSurvey(data)
 
             if (response.status === 201) {
@@ -152,10 +152,14 @@ const SurveyForm = () => {
                                 name="nationality"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Nationality *</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter your nationality" {...field} />
-                                        </FormControl>
+                                        <FormLabel>Country</FormLabel>
+                                        <CountryDropdown
+                                            placeholder="Country"
+                                            defaultValue={field.value}
+                                            onChange={(country) => {
+                                                field.onChange(country.name);
+                                            }}
+                                        />
                                         <FormMessage />
                                     </FormItem>
                                 )}
