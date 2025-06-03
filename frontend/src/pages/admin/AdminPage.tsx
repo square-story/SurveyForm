@@ -319,7 +319,7 @@ export default function AdminPage() {
       setSurveys((prev) => prev.filter((item) => item._id !== id))
       setMeta((prev) => ({ ...prev, totalCount: prev.totalCount - 1 }))
 
-      toast("Submission Deleted", {
+      toast.success("Submission Deleted", {
         description: "The submission has been deleted successfully.",
       })
     } catch (error) {
@@ -523,8 +523,8 @@ export default function AdminPage() {
 
             {/* Bulk Actions */}
             {Object.keys(rowSelection).length > 0 && (
-              <div className="bg-blue-50 p-3 rounded-md mb-4 flex flex-wrap items-center gap-3">
-                <span className="text-sm font-medium text-blue-800">
+              <div className="p-3 rounded-md mb-4 flex flex-wrap items-center gap-3">
+                <span className="text-sm font-medium">
                   {Object.keys(rowSelection).length} items selected
                 </span>
                 <div className="flex-1"></div>

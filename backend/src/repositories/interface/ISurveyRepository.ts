@@ -8,4 +8,5 @@ export interface ISurveyRepository {
     findSurvey(data: ISurvey): Promise<ISurveyModel | null>;
     findAllSurveys(params: ISurveyParams): Promise<ISurveyResponse>;
     getStats(): Promise<ISurveyDashboard>;
+    deleteSurvey(id: string): Promise<void>;
 }

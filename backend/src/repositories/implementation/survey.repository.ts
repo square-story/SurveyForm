@@ -100,6 +100,14 @@ export class SurveyRepository extends BaseRepository<ISurveyModel> implements IS
             throw new Error("Error getting survey stats");
         }
     }
+    async deleteSurvey(id: string): Promise<void> {
+        try {
+            await this.deleteOne(toObjectId(id));
+        } catch (error) {
+            console.error(error);
+            throw new Error("Error deleting survey");
+        }
+    }
 }
 
 

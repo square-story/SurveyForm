@@ -51,5 +51,14 @@ export const surveyService = {
             const errorMessage = extractAxiosErrorMessage(error, "Error updating survey status. Please try again.");
             throw new Error(errorMessage);
         }
+    },
+    deleteSurvey: async (id: string): Promise<AxiosResponse<void>> => {
+        try {
+            const response = await axiosInstance.delete(`/surveys/${id}`);
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error deleting survey. Please try again.");
+            throw new Error(errorMessage);
+        }
     }
 };

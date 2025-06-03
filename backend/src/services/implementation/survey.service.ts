@@ -55,8 +55,20 @@ export class SurveyService implements ISurveyService {
                 throw createHttpError(HttpStatus.NOT_FOUND, HttpResponse.SURVEY_NOT_FOUND);
             }
             survey.status = status as "new" | "reviewed" | "archived";
-
             return await survey.save();
+        } catch (error) {
+            console.error(error);
+            throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);
+        }
+    }
+
+    async deleteSurvey(id: string): Promise<void> {
+        try {
+            const survey = await this._surveyRepository.findSurveyById(id);
+            if (!survey) {
+                throw createHttpError(HttpStatus.NOT_FOUND, HttpResponse.SURVEY_NOT_FOUND);
+            }
+            await this._surveyRepository.deleteSurvey(id);
         } catch (error) {
             console.error(error);
             throw createHttpError(HttpStatus.INTERNAL_SERVER_ERROR, HttpResponse.SERVER_ERROR);

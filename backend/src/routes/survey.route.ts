@@ -13,5 +13,6 @@ surveyRouter.get("/", surveyController.findAllSurveys);
 surveyRouter.get("/:id", surveyController.findSurveyById);
 surveyRouter.post("/", validate(surveySchema), surveyController.createSurvey);
 surveyRouter.patch("/:id/status", surveyController.updateSurveyStatus);
+surveyRouter.delete("/:id", surveyController.deleteSurvey);
 
 export { surveyRouter };

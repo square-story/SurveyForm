@@ -70,4 +70,13 @@ export class SurveyController implements ISurveyController {
             next(error);
         }
     }
+    deleteSurvey = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const { id } = req.params;
+            await this._surveyService.deleteSurvey(id);
+            res.status(HttpStatus.NO_CONTENT).send();
+        } catch (error) {
+            next(error);
+        }
+    }
 }
