@@ -399,8 +399,18 @@ export default function AdminPage() {
 
   const handleRefresh = async () => {
     OnConfetti(0.5)
+    setTableLoading(true);
+    setRowSelection({});
+    setSorting([]);
+    setColumnFilters([]);
+    setColumnVisibility({});
+    setPagination({
+      pageIndex: 0,
+      pageSize: 10,
+    });
     const response = await surveyService.getStats();
     dispatch(setSurveyStats(response.data));
+    setTableLoading(false);
   }
   if (tableLoading || loading) return <Loading />
   if (error) {
