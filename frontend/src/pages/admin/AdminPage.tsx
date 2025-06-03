@@ -25,11 +25,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { OnConfetti } from "@/utils/on-conffite"
 import Loading from "@/components/admin/data-table-skelton"
 import { useConfirm } from "@/components/useConfirm"
+import { useDebounce } from "@/hooks/useDebounce"
 
 export default function AdminPage() {
   const { confirm, ConfirmDialog } = useConfirm()
   const { stats, loading, error } = useAdminDashboard()
   const [surveys, setSurveys] = useState<ISurvey[]>([])
+
   const [meta, setMeta] = useState({
     totalCount: 0,
     pageCount: 0,
@@ -43,11 +45,17 @@ export default function AdminPage() {
   const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState("")
   const [selectedSubmission, setSelectedSubmission] = useState<ISurvey | null>(null)
+  const [searchInput, setSearchInput] = useState("")
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   })
   const dispatch = useDispatch<AppDispatch>()
+  const debouncedSearch = useDebounce(searchInput, 1000);
+
+  useEffect(() => {
+    setGlobalFilter(debouncedSearch)
+  }, [debouncedSearch])
 
   const columns: ColumnDef<ISurvey>[] = [
     {
@@ -229,7 +237,7 @@ export default function AdminPage() {
           limit: pagination.pageSize,
           sortBy,
           sortOrder,
-          search: globalFilter || undefined,
+          search: debouncedSearch || undefined,
           status: statusFilter !== 'all' ? statusFilter as "new" | "reviewed" | "archived" : undefined,
         }
         const response = await surveyService.findAllSurveys(params)
@@ -246,7 +254,7 @@ export default function AdminPage() {
       }
     }
     fetchData()
-  }, [pagination, sorting, columnFilters, globalFilter])
+  }, [pagination, sorting, columnFilters, globalFilter, debouncedSearch])
 
 
 
@@ -504,8 +512,8 @@ export default function AdminPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search by name, email, or nationality..."
-                  value={globalFilter}
-                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                   className="pl-10"
                 />
               </div>

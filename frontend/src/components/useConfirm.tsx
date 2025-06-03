@@ -16,6 +16,8 @@ type ConfirmOptions = {
   confirmText?: string
   cancelText?: string
   icon?: React.ReactNode
+  confirmButtonClassName?: string
+  cancelButtonClassName?: string
 }
 
 export function useConfirm() {
@@ -43,7 +45,7 @@ export function useConfirm() {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-full border" aria-hidden="true">
+          <div className="flex size-9 shrink-0 items-center justify-center" aria-hidden="true">
             {options.icon}
           </div>
           <AlertDialogHeader>
@@ -54,8 +56,8 @@ export function useConfirm() {
           </AlertDialogHeader>
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancel}>{options.cancelText || "Cancel"}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>{options.confirmText || "Confirm"}</AlertDialogAction>
+          <AlertDialogCancel className={options.cancelButtonClassName || ""} onClick={handleCancel}>{options.cancelText || "Cancel"}</AlertDialogCancel>
+          <AlertDialogAction className={options.confirmButtonClassName || "bg-red-500 hover:bg-red-600 text-white"} onClick={handleConfirm}>{options.confirmText || "Confirm"}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

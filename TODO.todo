@@ -10,6 +10,6 @@ Todo:
   ☐ Deploy Survey Form @today
   ☐ Write Documentation @today
   ☐ Update README @today
-  ☐ Update the search bar with debounce @today
+  ✔ Update the search bar with debounce @today @started(25-06-03 20:34) @done(25-06-03 20:54) @lasted(20m41s)
   ☐ Optimize performance for large datasets @today
-  ☐ delete Prompt component @today @started(25-06-03 18:52)
+  ✔ delete Prompt component @today @started(25-06-03 18:52) @done(25-06-03 20:24) @lasted(1h32m38s)
