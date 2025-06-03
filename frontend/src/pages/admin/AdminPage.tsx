@@ -300,7 +300,7 @@ export default function AdminPage() {
       // Update local data
       setSurveys((prev) => prev.map((item) => (item._id === id ? { ...item, status: newStatus } : item)))
 
-      toast("Status Updated", {
+      toast.success("Status Updated", {
         description: `Submission has been marked as ${newStatus}.`,
       })
     } catch (error) {

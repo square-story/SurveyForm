@@ -60,4 +60,14 @@ export class SurveyController implements ISurveyController {
             next(error);
         }
     }
+    updateSurveyStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const { id } = req.params;
+            const { status } = req.body;
+            const updatedSurvey = await this._surveyService.updateSurveyStatus(id, status);
+            res.status(HttpStatus.OK).json({ survey: updatedSurvey, message: HttpResponse.SURVEY_STATUS_UPDATED });
+        } catch (error) {
+            next(error);
+        }
+    }
 }

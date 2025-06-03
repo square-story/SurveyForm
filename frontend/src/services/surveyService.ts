@@ -42,5 +42,14 @@ export const surveyService = {
             const errorMessage = extractAxiosErrorMessage(error, "Error fetching survey statistics. Please try again.");
             throw new Error(errorMessage);
         }
+    },
+    updateSurveyStatus: async (id: string, status: string): Promise<AxiosResponse<SurveyResponse>> => {
+        try {
+            const response = await axiosInstance.patch(`/surveys/${id}/status`, { status });
+            return response;
+        } catch (error: unknown) {
+            const errorMessage = extractAxiosErrorMessage(error, "Error updating survey status. Please try again.");
+            throw new Error(errorMessage);
+        }
     }
 };

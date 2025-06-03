@@ -5,4 +5,5 @@ export interface ISurveyController {
     createSurvey: (req: Request, res: Response, next: NextFunction) => Promise<void>;
     findAllSurveys: (req: Request, res: Response, next: NextFunction) => Promise<void>;
     getStats: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    updateSurveyStatus: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 }
