@@ -23,6 +23,7 @@ A full-stack survey form built with the MERN stack (MongoDB, Express, React, Nod
 ![Light/admin/dashboard](https://i.vgy.me/EzIMsU.png)
 
 ### Demo Video
+
 [![asciicast](https://i.vgy.me/eFFQkL.png)](https://youtu.be/7NwV1eWGEnw)
 
 ## Getting Started
