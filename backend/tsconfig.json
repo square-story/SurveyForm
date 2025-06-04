@@ -18,9 +18,10 @@
         "../shared/types/*"
       ]
     },
+    "lib": ["ES2022", "DOM"],
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "pretty": true,
     "noEmit": false,
     "noErrorTruncation": true,
