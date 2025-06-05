@@ -6,7 +6,7 @@
     "dev": "tsx watch src/index.ts",
     "start": "node ./dist/backend/src/index.js",
     "script": "ts-node -r tsconfig-paths/register ./src/script/addAdmin.script.ts",
-    "build": "tsc && tsc-alias",
+    "build": "tsc -p tsconfig.docker.json && tsc-alias -p tsconfig.docker.json",
     "start:backend": "cross-env NODE_ENV=production npm start",
     "dev:backend": "cross-env NODE_ENV=development tsx watch src/index.ts"
   },
