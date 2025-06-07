@@ -14,8 +14,8 @@ import { Link } from "react-router-dom"
 import { Textarea } from "../ui/textarea"
 import { OnConfetti } from "@/utils/on-conffite"
 import { surveyService } from "@/services/surveyService"
-import { PhoneInput } from "../phone-input"
-import { CountryDropdown } from "../country-dropdown"
+import { PhoneInput } from "../ui/phone-input"
+import { CountryDropdown } from "../ui/country-dropdown"
 
 export type SurveyFormData = z.infer<typeof surveySchema>
 

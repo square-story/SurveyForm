@@ -20,15 +20,16 @@ import { formatTimestamp } from "@/utils/formatDate"
 import { surveyService } from "@/services/surveyService"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { OnConfetti } from "@/utils/on-conffite"
 import Loading from "@/components/admin/data-table-skelton"
-import { useConfirm } from "@/components/useConfirm"
+import { useConfirm } from "@/hooks/useConfirm"
 import { useDebounce } from "@/hooks/useDebounce"
 import { setSurveyStats } from "@/store/slices/surveySlice"
 import { convertToCSV } from "@/helpers/convertToCSV"
 import { downloadCSV } from "@/helpers/downloadCSV"
+import { StatsCard } from "@/components/admin/StatsCard"
+import { BulkActionsBar } from "@/components/admin/BulkActionsBar"
+import { SubmissionDetailsDialog } from "@/components/admin/SubmissionDetailsDialog"
 
 export default function AdminPage() {
   const { confirm, ConfirmDialog } = useConfirm()
@@ -458,59 +459,25 @@ export default function AdminPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium ">Total Submissions</p>
-                  <p className="text-3xl font-bold ">{stats?.totalSurveys}</p>
-                </div>
-                <Users className="w-8 h-8 text-blue-600" />
-              </div>
-            </CardContent>
-          </Card>
+          <StatsCard title="Total Submissions" value={stats?.totalSurveys} icon={<Users className="w-8 h-8 text-blue-600" />} />
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium ">New</p>
-                  <p className="text-3xl font-bold text-green-600">{stats?.newSurveys}</p>
-                </div>
-                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-green-600 rounded-full animate-ping"></div>
-                  <div className="w-3 h-3 bg-green-600 rounded-full absolute"></div>
-                </div>
+          <StatsCard
+            title="New"
+            value={<span className="text-green-600">{stats?.newSurveys}</span>}
+            icon={
+              <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
+                <div className="w-3 h-3 bg-green-600 rounded-full animate-ping"></div>
+                <div className="w-3 h-3 bg-green-600 rounded-full absolute"></div>
               </div>
-            </CardContent>
-          </Card>
+            }
+          />
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium ">Reviewed</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats?.reviewedSurveys}</p>
-                </div>
-                <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center relative">
-                  <div className="w-3 h-3 bg-blue-600 rounded-full animate-ping absolute"></div>
-                  <div className="w-3 h-3 bg-blue-600 rounded-full relative"></div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <StatsCard title="Reviewed" value={stats?.reviewedSurveys} icon={<div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center relative">
+            <div className="w-3 h-3 bg-blue-600 rounded-full animate-ping absolute"></div>
+            <div className="w-3 h-3 bg-blue-600 rounded-full relative"></div>
+          </div>} />
 
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium ">Archived</p>
-                  <p className="text-3xl font-bold ">{stats?.totalArchived}</p>
-                </div>
-                <BarChart3 className="w-8 h-8 " />
-              </div>
-            </CardContent>
-          </Card>
+          <StatsCard title="Archived" value={stats?.totalArchived} icon={<BarChart3 className="w-8 h-8 " />} />
         </div>
 
         {/* Submissions Table */}
@@ -575,26 +542,12 @@ export default function AdminPage() {
 
             {/* Bulk Actions */}
             {Object.keys(rowSelection).length > 0 && (
-              <div className="p-3 rounded-md mb-4 flex flex-wrap items-center gap-3">
-                <span className="text-sm font-medium">
-                  {Object.keys(rowSelection).length} items selected
-                </span>
-                <div className="flex-1"></div>
-                <Button size="sm" variant="outline" onClick={() => handleBulkAction("review")} className="bg-white">
-                  Mark as Reviewed
-                </Button>
-                <Button size="sm" variant="outline" onClick={() => handleBulkAction("archive")} className="bg-white">
-                  Archive
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handleBulkAction("delete")}
-                  className="bg-white text-red-600 hover:text-red-700"
-                >
-                  <Trash2 className="w-4 h-4 mr-1" /> Delete
-                </Button>
-              </div>
+              <BulkActionsBar
+                selectedCount={Object.keys(rowSelection).length}
+                onReview={() => handleBulkAction("review")}
+                onArchive={() => handleBulkAction("archive")}
+                onDelete={() => handleBulkAction("delete")}
+              />
             )}
 
             {/* Table */}
@@ -725,68 +678,11 @@ export default function AdminPage() {
           </CardContent>
         </Card>
       </main>
-      <Dialog open={!!selectedSubmission} onOpenChange={() => setSelectedSubmission(null)}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Submission Details</DialogTitle>
-            <DialogDescription>Complete information for this survey submission</DialogDescription>
-          </DialogHeader>
-          {selectedSubmission && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Name</Label>
-                  <p className="text-sm">{selectedSubmission.name}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Gender</Label>
-                  <p className="text-sm capitalize">{selectedSubmission.gender}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Email</Label>
-                  <p className="text-sm">{selectedSubmission.email}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Phone</Label>
-                  <p className="text-sm">{selectedSubmission.phone}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Nationality</Label>
-                  <p className="text-sm">{selectedSubmission.nationality}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Status</Label>
-                  <div className="mt-1">
-                    {selectedSubmission.status === "new" ? (
-                      <Badge variant="default">New</Badge>
-                    ) : selectedSubmission.status === "reviewed" ? (
-                      <Badge variant="secondary">Reviewed</Badge>
-                    ) : (
-                      <Badge variant="outline">Archived</Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div>
-                <Label className="text-sm font-medium text-gray-600">Address</Label>
-                <p className="text-sm mt-1">{selectedSubmission.address}</p>
-              </div>
-              {selectedSubmission.message && (
-                <div>
-                  <Label className="text-sm font-medium text-gray-600">Message</Label>
-                  <p className="text-sm mt-1">{selectedSubmission.message}</p>
-                </div>
-              )}
-              <div>
-                <Label className="text-sm font-medium text-gray-600">Submitted At</Label>
-                <p className="text-sm mt-1">
-                  {formatTimestamp(new Date(selectedSubmission.createdAt))}
-                </p>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <SubmissionDetailsDialog
+        open={!!selectedSubmission}
+        onOpenChange={() => setSelectedSubmission(null)}
+        submission={selectedSubmission}
+      />
       {ConfirmDialog}
     </div>
   )

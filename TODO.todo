@@ -7,11 +7,12 @@ Todo:
   ✔ Integrate API for Survey Data @next week @done(25-06-03 18:46)
   ✔ Implement Form Validation @next week @done(25-06-03 18:46)
   ✔ Test Survey Form Functionality @next week @done(25-06-03 18:46)
-  ☐ Deploy Survey Form @today
-  ☐ Write Documentation @today
-  ☐ Update README @today
+  ✔ Deploy Survey Form @today @done(25-06-07 15:43)
+  ✔ Write Documentation @today @done(25-06-07 15:43)
+  ✔ Update README @today @done(25-06-07 15:43)
   ✔ Update the search bar with debounce @today @started(25-06-03 20:34) @done(25-06-03 20:54) @lasted(20m41s)
-  ☐ Optimize performance for large datasets @today
+  ✔ Optimize performance for large datasets @today @done(25-06-07 15:43)
   ✔ delete Prompt component @today @started(25-06-03 18:52) @done(25-06-03 20:24) @lasted(1h32m38s)
   ✔ Add Phone component @today @started(25-06-03 21:53) @done(25-06-03 22:06) @lasted(13m24s)
   ✔ Add Nationality component @today @started(25-06-03 22:39) @done(25-06-03 22:39) @lasted(8s)
+  ☐ Manage the issues with filter table and pagination @low
