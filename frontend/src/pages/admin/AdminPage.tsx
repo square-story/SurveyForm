@@ -551,8 +551,8 @@ export default function AdminPage() {
             )}
 
             {/* Table */}
-            <div className="rounded-md border">
-              <Table>
+            <div className="rounded-md border overflow-x-auto">
+              <Table className="min-w-[600px]">
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
@@ -582,7 +582,7 @@ export default function AdminPage() {
                     table.getRowModel().rows.map((row) => (
                       <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                         {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
+                          <TableCell key={cell.id} className="px-2 py-2 text-xs sm:text-sm sm:px-4 sm:py-3">
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </TableCell>
                         ))}
@@ -600,8 +600,8 @@ export default function AdminPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between space-x-2 py-4">
-              <div className="flex-1 text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0 sm:space-x-2 py-4">
+              <div className="flex-1 text-sm text-muted-foreground text-center sm:text-left">
                 {Object.keys(rowSelection).length > 0
                   ? `${Object.keys(rowSelection).length} of ${meta.totalCount} row(s) selected.`
                   : `Showing ${pagination.pageIndex * pagination.pageSize + 1} to ${Math.min(
@@ -609,7 +609,7 @@ export default function AdminPage() {
                     meta.totalCount,
                   )} of ${meta.totalCount} entries`}
               </div>
-              <div className="flex items-center space-x-6 lg:space-x-8">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 lg:space-x-8">
                 <div className="flex items-center space-x-2">
                   <p className="text-sm font-medium">Rows per page</p>
                   <Select
