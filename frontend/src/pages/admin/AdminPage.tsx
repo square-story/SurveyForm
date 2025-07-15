@@ -5,7 +5,7 @@ import { useAdminDashboard } from "@/hooks/useAdminDashboard"
 import { AuthService } from "@/services/authService"
 import type { AppDispatch } from "@/store"
 import { logout } from "@/store/slices/authSlice"
-import { BarChart3, ChevronLeft, ChevronRight, Download, Filter, LogOut, RefreshCw, Search, Users } from "lucide-react"
+import { BarChart3, ChevronLeft, ChevronRight, Download, Filter, LogOut, RefreshCw, Search, Users2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toast } from "sonner"
@@ -459,7 +459,7 @@ export default function AdminPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <StatsCard title="Total Submissions" value={stats?.totalSurveys} icon={<Users className="w-8 h-8 text-blue-600" />} />
+          <StatsCard title="Total Submissions" value={stats?.totalSurveys} icon={<Users2 className="w-8 h-8" />} />
 
           <StatsCard
             title="New"
